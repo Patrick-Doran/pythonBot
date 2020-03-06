@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv();
 token = os.getenv('Discord_Token')
 
-client = discord.client()
+client = discord.Client()
 
 @client.event
 async def on_ready():
