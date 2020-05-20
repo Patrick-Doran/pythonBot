@@ -1,9 +1,9 @@
 import os
-import discord
+import discord 
 from dotenv import load_dotenv
 
 #Gather private info
-load_dotenv();
+load_dotenv()
 token = os.getenv('Discord_Token')
 server = os.getenv('Server_Token')
 
