@@ -1,6 +1,6 @@
 import os
-import discord 
-from dotenv import load_dotenv
+import discord  # pylint: disable=import-error
+from dotenv import load_dotenv  # pylint: disable=import-error
 
 #Gather private info from env
 load_dotenv()
@@ -15,8 +15,9 @@ async def on_ready(): #Activates once connection to Discord is established
     # for guild in client.guilds: #Iterates through all of the servers that the bot is connected to
     #     if guild.name == server:
     #         break #Leave as soon as server id is found
+    
     #Print out name of bot and the server its on
-    print('Loggin in as  {0.user}'.format(client)) #Prints name in terminal
+    print('Loggin in as  {0.user}'.format(client))
 
 @client.event
 async def on_message(message): #upon hearing the call of ~
