@@ -6,6 +6,7 @@ client = discord.Client()
 id = client.get_guild('server_id')
 
 inprog = 0
+counter = 0
 
 @client.event
 async def on_ready():
@@ -41,14 +42,25 @@ async def on_message(message): #This event occurs everytime a message is sent in
             except asyncio.TimeoutError:
                 await message.author.send('You took too long!')
                 inprog = 0
-                return
-
-            if len(msg2.content) != 0:
-                await message.channel.send('```{} wants to announce:\n{}```'.format(message.author.name, msg2.content)) #posts the message in the chat
+                return 
+            await message.channel.send('@everyone')
+            await message.channel.send('```{} wants to announce:\n{}```'.format(message.author.name, msg2.content)) #posts the message in the chat
             inprog = 0
             
         else:
             await message.author.send('Someone is currently using the repeat command, please wait!')
+
+    if message.content.startswith('$counter'):
+        global counter
+        counter = counter + 1
+        await message.channel.send('```+1```')
+    
+    if message.content.startswith('$cdisplay'):
+        await message.channel.send('```The counter is currently at: {}```'.format(counter))
+
+    if message.content.startswith("$creset"):
+        counter = 0
+        await message.channel.send('```The counter has been reset.```')
         
 
 #@bot.command(name='startpoll')
