@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO) #NOTE:bot takes more time to start up, d
 #Gather private info from env
 load_dotenv()
 token = os.getenv('Discord_Token')
-server = os.getenv('Server_Token')
+server = os.getenv('Server_Name')
 
 #A client interacts with the Discord API
 client = discord.Client()
