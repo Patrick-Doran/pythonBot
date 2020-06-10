@@ -25,11 +25,12 @@ async def on_ready(): #Activates once connection to Discord is established
 
 @client.event
 async def on_message(message): #upon hearing the call of ~
-    if message.author == client.user: #prevents recursion with self
-        return
-    if message.content.startswith('~hello'):
-        await message.channel.send('Hello.')
-    else:
-        await message.channel.send('I do not know that one.')
+    if str(message.channel) == "bot-speak-🤖": #the bot will only respond to commands made in the appropriate channel  
+        if message.author == client.user: #prevents recursion with self
+            return
+        if message.content.startswith('~hello'):
+            await message.channel.send('Hello.')
+        else:
+            await message.channel.send('I do not know that one.')
 
 client.run(token)
