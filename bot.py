@@ -25,7 +25,7 @@ async def on_ready(): #Activates once connection to Discord is established
     #         break #Leave as soon as server id is found
     
     #Print out name of bot and the server its on
-    print('Loggin in as  {0.user}'.format(client))
+    print('Logging in as  {0.user}'.format(client))
 
 @client.event
 async def on_message(message): #upon hearing the call of ~
@@ -66,6 +66,8 @@ async def on_message(message): #upon hearing the call of ~
                 
             else:
                 await message.author.send('Someone is currently using trying to post an announcement, please wait!')
+        elif (message.content.startswith('~quit')):
+            await client.logout()
         else:
             await message.channel.send('I do not know that one.')
 
