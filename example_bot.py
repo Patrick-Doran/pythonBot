@@ -7,7 +7,6 @@ id = client.get_guild('server_id')
 
 inprog = 0
 counter = 0
-
 valid_channels = ['commands']
 
 @client.event
@@ -23,13 +22,6 @@ async def on_message(message): #This event occurs everytime a message is sent in
 
         #Organize process by making it so that the message must be sent to the bot via a direct message
         #Only the original author of the command message may respond to the prompt
-        def check(author):
-            def check2(message):
-                if message.author != author or message.channel != msg.channel:
-                    return False
-                else:
-                    return True
-            return check2
 
         if message.content.startswith('$repeat'):
             global inprog
@@ -41,16 +33,24 @@ async def on_message(message): #This event occurs everytime a message is sent in
                     await message.author.send('Error')
                     inprog = 0
                     return
-            
+
+                def check(author):
+                    def check2(message):
+                        if message.author != author or message.channel != msg.channel:
+                            return False
+                        else:
+                            return True
+                    return check2
+
                 try:
                     msg2 = await client.wait_for('message', check=check(message.author), timeout=30) #bot waits for a response from the author via direct message
                 except asyncio.TimeoutError:
                     await message.author.send('You took too long!')
                     inprog = 0
                     return
-                channel1 = client.get_channel(712435402601922914)
-                await channel1.send('@everyone')
-                await channel1.send('```{} wants to announce:\n{}```'.format(message.author.name, msg2.content)) #posts the message in the chat
+                general = client.get_channel(712435402601922914)
+                await general.send('@everyone')
+                await general.send('```{} wants to announce:\n{}```'.format(message.author.name, msg2.content)) #posts the message in the chat
                 inprog = 0
                 
             else:
@@ -67,14 +67,8 @@ async def on_message(message): #This event occurs everytime a message is sent in
         if message.content.startswith("$creset"):
             counter = 0
             await message.channel.send('```The counter has been reset.```')
-        
 
-#@bot.command(name='startpoll')
-#async def create_poll(self, ctx):
-#    try:
-#        msg = await ctx.message.author.send("Please respond with the question you would like to pose in **{}**:".format(ctx.message.guild.name))
-#    except discord.Forbidden:
-#        await ctx.send("Fix yo shit.")
-#        return
+        if message.content.startswith("$off"):
+            await client.logout()
 
 client.run('token')
